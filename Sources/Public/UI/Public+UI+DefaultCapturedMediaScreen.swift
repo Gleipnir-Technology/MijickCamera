@@ -12,16 +12,16 @@
 import SwiftUI
 import AVKit
 
-struct DefaultCapturedMediaScreen: MCapturedMediaScreen {
-    let capturedMedia: MCameraMedia
-    let namespace: Namespace.ID
-    let retakeAction: () -> ()
-    let acceptMediaAction: () -> ()
+public struct DefaultCapturedMediaScreen: MCapturedMediaScreen {
+    public let capturedMedia: MCameraMedia
+    public let namespace: Namespace.ID
+    public let retakeAction: () -> ()
+    public let acceptMediaAction: () -> ()
     @State private var player: AVPlayer = .init()
     @State private var isInitialized: Bool = false
 
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             createContentView()
             createButtons()
@@ -32,7 +32,7 @@ struct DefaultCapturedMediaScreen: MCapturedMediaScreen {
         .onAppear { isInitialized = true }
     }
 }
-private extension DefaultCapturedMediaScreen {
+public extension DefaultCapturedMediaScreen {
     @ViewBuilder func createContentView() -> some View { if isInitialized {
         if let image = capturedMedia.getImage() { createImageView(image) }
         else if let video = capturedMedia.getVideo() { createVideoView(video) }
@@ -48,7 +48,7 @@ private extension DefaultCapturedMediaScreen {
         .padding(.bottom, 8)
     }
 }
-private extension DefaultCapturedMediaScreen {
+public extension DefaultCapturedMediaScreen {
     func createImageView(_ image: UIImage) -> some View {
         Image(uiImage: image)
             .resizable()
@@ -82,7 +82,7 @@ private extension DefaultCapturedMediaScreen {
     }}
 }
 
-private extension DefaultCapturedMediaScreen {
+public extension DefaultCapturedMediaScreen {
     func onVideoAppear(_ url: URL) {
         player = .init(url: url)
         player.play()
